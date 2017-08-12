@@ -1,21 +1,16 @@
 #!/bin/bash
 
-#Created by KyleM (AKA Wered) and HarryJ
-#version 1.2.3
+# Created by Harry Jackson - for use with 
+# Current Version 0.1.0
 
 cat << "EOF"
-________          .__          __      __      __ __________ 
-\_____  \   __ __ |__|  ____  |  | __ /  \    /  \\______   \
- /  / \  \ |  |  \|  |_/ ___\ |  |/ / \   \/\/   / |     ___/
-/   \_/.  \|  |  /|  |\  \___ |    <   \        /  |    |    
-\_____\ \_/|____/ |__| \___  >|__|_ \   \__/\  /   |____|    
-       \__>                \/      \/        \/            
+(GRAPHICS COMING SOON) :-)           
 EOF
 
 #Setting pwd as variable, may find a better way to do this later
 CWD=$(pwd)
 
-#Lets get some wordpress
+#Lets get some wordpress stuff
 wget https://wordpress.org/latest.tar.gz --no-check-certificate 
 tar -xzf "$CWD"/latest.tar.gz 
 cd "$CWD"/wordpress 
@@ -24,7 +19,7 @@ cd "$CWD"
 rm -R "$CWD"/wordpress 
 cp "$CWD"/wp-config-sample.php "$CWD"/wp-config.php
 
-#Time to set a username and password
+#Time to set a username and password randomly, and print out to suggest using
 PASSWDDB="$(date | sha256sum | base64 | head -c 8 )"
 DBNAME="$(date | md5sum | head -c 8 )"
 
