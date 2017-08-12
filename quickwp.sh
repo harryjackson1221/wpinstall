@@ -57,6 +57,15 @@ sed -i -e "s/'$ousername'/'$dbname'/g" wp-config.php
 sed -i -e "s/'$opassword'/'$PASSWDDB'/g" wp-config.php
 sed -i -e "s/'$odbname'/'$dbname'/g" wp-config.php
 
-chown -R $p:$p .
+#Using sed with regex to complete instead
+#sed -r \
+#    "
+#        s/define\(([\"'])DB_(NAME|USER)\1,\s*([\"']).*\2/define(\1DB_NAME\1, \2${dbname}\2/g;
+#        s/define\(([\"'])DB_PASSWORD\1,\s*([\"']).*\2/define(\1DB_NAME\1, \2${PASSWDDB}\2/g;
+#        s/define\(([\"'])DB_HOST\1,\s*([\"']).*\2/define(\1DB_NAME\1, \2localhost\2/g;
+#    " \
+#    -i wp-config.php
 
-chown $p:nobody /home/$p/public_html
+#chown -R $p:$p .
+
+#chown $p:nobody /home/$p/public_html
