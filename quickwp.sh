@@ -13,11 +13,18 @@ ________          .__          __      __      __ __________
 EOF
 
 
-wget https://wordpress.org/latest.tar.gz --no-check-certificate && tar -xzf latest.tar.gz &&  cd wordpress && cp -rf . .. && cd .. && rm -R wordpress && cp wp-config-sample.php wp-config.php
+
+wget https://wordpress.org/latest.tar.gz --no-check-certificate 
+tar -xzf latest.tar.gz 
+cd wordpress 
+cp -rf . .. 
+cd .. 
+rm -R wordpress 
+cp wp-config-sample.php wp-config.php
 PASSWDDB="$(date | sha256sum | base64 | head -c 8 )"; DBNAME="$(date | sha256sum | base64 | head -c 4 )";
 p=$(pwd | cut -d/ -f3)
-sudo /opt/*rads/lil-cpanel $p mysql create $DBNAME; 
-sudo /opt/*rads/lil-cpanel $p mysql create-user $DBNAME $PASSWDDB;
+# (in progress) mysql create $DBNAME; 
+# (in progress) mysql create-user $DBNAME $PASSWDDB;
 
 autop=$(echo $p | cut -c1-8);
 echo $autop
