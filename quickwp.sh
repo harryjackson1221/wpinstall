@@ -25,24 +25,26 @@ rm -R "$CWD"/wordpress
 cp "$CWD"/wp-config-sample.php "$CWD"/wp-config.php
 
 #Time to set a username and password
-PASSWDDB="$(date | sha256sum | base64 | head -c 8 )"; 
-DBNAME="$(date | sha256sum | base64 | head -c 4 )";
-p=$(pwd | cut -d/ -f3)
+PASSWDDB="$(date | sha256sum | base64 | head -c 8 )"
+DBNAME="$(date | md5sum | head -c 8 )"
+
+#Username on CentOS 7 w/ cPanel - need to devise a way to ask for the file owner/user, dbhost dbname dbuser and pass
+#p=$(pwd | cut -d/ -f3)
 # (in progress) mysql create $DBNAME; 
 # (in progress) mysql create-user $DBNAME $PASSWDDB;
 
-autop=$(echo $p | cut -c1-8);
+#autop=$(echo $p | cut -c1-8);
 
-echo $autop
+#echo $autop
 
-echo $autop
-echo "password:" $PASSWDDB
-dbname="$autop"_"$DBNAME"
-echo $dbname
+#echo $autop
+#echo "password:" $PASSWDDB
+#dbname="$autop"_"$DBNAME"
+#echo $dbname
 
-mysql -e "GRANT ALL PRIVILEGES ON ${dbname}.* TO '${dbname}'@'localhost';"
+#mysql -e "GRANT ALL PRIVILEGES ON ${dbname}.* TO '${dbname}'@'localhost';"
 
-echo "DB privleges granted"
+#echo "DB privleges granted"
 
 ohost=$(grep DB_HOST "wp-config.php" |cut -d "'" -f 4)
 ousername=$(grep DB_USER "wp-config.php" | cut -d "'" -f 4)
