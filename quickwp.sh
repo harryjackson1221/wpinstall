@@ -12,21 +12,27 @@ ________          .__          __      __      __ __________
        \__>                \/      \/        \/            
 EOF
 
+#Setting pwd as variable, may find a better way to do this later
+CWD=$(pwd)
 
-
+#Lets get some wordpress
 wget https://wordpress.org/latest.tar.gz --no-check-certificate 
-tar -xzf latest.tar.gz 
-cd wordpress 
-cp -rf . .. 
-cd .. 
-rm -R wordpress 
-cp wp-config-sample.php wp-config.php
-PASSWDDB="$(date | sha256sum | base64 | head -c 8 )"; DBNAME="$(date | sha256sum | base64 | head -c 4 )";
+tar -xzf "$CWD"/latest.tar.gz 
+cd "$CWD"/wordpress 
+cp -rf . "$CWD"
+cd "$CWD"
+rm -R "$CWD"/wordpress 
+cp "$CWD"/wp-config-sample.php "$CWD"/wp-config.php
+
+#Time to set a username and password
+PASSWDDB="$(date | sha256sum | base64 | head -c 8 )"; 
+DBNAME="$(date | sha256sum | base64 | head -c 4 )";
 p=$(pwd | cut -d/ -f3)
 # (in progress) mysql create $DBNAME; 
 # (in progress) mysql create-user $DBNAME $PASSWDDB;
 
 autop=$(echo $p | cut -c1-8);
+
 echo $autop
 
 echo $autop
