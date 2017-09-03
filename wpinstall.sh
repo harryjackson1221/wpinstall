@@ -26,6 +26,7 @@ DBUNAME="$()"
 
 #Username on CentOS 7 w/ cPanel - need to devise a way to ask for the file owner/user, dbhost dbname dbuser and pass
 #p=$(pwd | cut -d/ -f3)
+
 echo "WP Database Name: "
 read -e dbname
 echo "WP Database User: "
@@ -38,21 +39,21 @@ read -e dbtable
 echo "Do you need to setup new MySQL database? (y/n)"
 read -e setupmysql
 if [ "$setupmysql" == y ] ; then
-		echo "============================================"
-		echo "Setting up the database."
-		echo "============================================"
-		#login to MySQL, add database, add user and grant permissions
-		dbsetup="create database $dbname;GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@$mysqlhost IDENTIFIED BY '$dbpass';FLUSH PRIVILEGES;"
-		mysql -u $mysqluser -p $mysqlpass -e "$dbsetup"
+	echo "************************"
+	echo "Setting up the database."
+	echo "------------------------"
+	#login to MySQL, add db, add user and grant permissions to db
+	dbsetup="create database $dbname;GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@$mysqlhost IDENTIFIED BY '$dbpass';FLUSH PRIVILEGES;"
+	mysql -u $mysqluser -p $mysqlpass -e "$dbsetup"
 		if [ $? != "0" ]; then
-			echo "============================================"
-			echo "[Error]: Database creation failed. Aborting."
-			echo "============================================"
+			echo "************************"
+			echo "[Error]: Database creation failed. Aborting. :-("
+			echo "------------------------"
 			exit 1
 		fi
 fi
 
-#login to MySQL, add database, add user and grant permissions
+#login to MySQL, add db, add user and grant permissions to db
 dbsetup="create database $dbname;GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@$mysqlhost IDENTIFIED BY '$dbpass';FLUSH PRIVILEGES;"
 mysql -u $mysqluser -p$mysqlpass -e "$dbsetup"
 
